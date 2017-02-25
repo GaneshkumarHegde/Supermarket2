@@ -42,7 +42,7 @@ public void onClickAdmin(View view){
 
 
 public  void customerLogin(View view){
-    Intent myIntent=new Intent(this,Main3Activity.class);
+    Intent myIntent=new Intent(this,Main5Activity.class);
     startActivity(myIntent);
 }
     public void createNewCustomer(View view){

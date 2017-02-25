@@ -28,9 +28,9 @@ public class Welcome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         Toolbar toolbar = (Toolbar) findViewById(R.id.myToolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+       // setSupportActionBar(toolbar);
+        //ActionBar actionBar = getSupportActionBar();
+       // actionBar.hide();
         int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {
             @Override

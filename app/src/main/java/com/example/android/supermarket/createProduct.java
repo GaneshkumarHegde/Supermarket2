@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,15 +30,27 @@ private static final int CAMERA_REQUEST=123;
     }
 
     public void openCamera(View view){
-        Intent i=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(i,CAMERA_REQUEST);
+        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePicture, 0);
 
     }
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        if(requestCode==CAMERA_REQUEST && resultCode== Activity.RESULT_OK){
-            Bitmap photo=(Bitmap)data.getExtras().get("data");
-            ImageView i=(ImageView) findViewById(R.id.imageView);
-            i.setImageBitmap(photo);
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        ImageView imageview=(ImageView)findViewById(R.id.imageView);
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch(requestCode) {
+            case 0:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    imageview.setImageURI(selectedImage);
+                }
+
+                break;
+            case 1:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    imageview.setImageURI(selectedImage);
+                }
+                break;
         }
     }
     public void clickBack(View view){
@@ -55,10 +68,9 @@ try{
          pno=Integer.parseInt(e2.getText().toString());
          pprice=Integer.parseInt(e3.getText().toString());
          pdiscount=Integer.parseInt(e4.getText().toString());
-    TextView textView=(TextView)findViewById(R.id.textView);
-    textView.setText("Product Name:"+pname+"\nProduct No:"+pno+"\nProduct Price:"+pprice);
 
-        //Toast.makeText(this,"Product created Successfully with product number "+pno,LENGTH_SHORT).show();
+
+        Toast.makeText(this,"Product with product number "+pno+"  created Successfully  ",LENGTH_SHORT).show();
 
 
     }
@@ -80,6 +92,11 @@ try{
        builder.create().show();
 
     }
+    }
+    public void gallery(View view){
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickPhoto , 1);
     }
 
 }
