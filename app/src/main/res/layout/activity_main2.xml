@@ -37,7 +37,7 @@
         />
 
     <Button
-        android:text="Query"
+        android:text="offers"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/button7"
@@ -46,7 +46,7 @@
         />
 
     <Button
-        android:text="Modify Product"
+        android:text="Customer Queries"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/button8"
@@ -54,14 +54,6 @@
         android:layout_marginTop="20dp"
         />
 
-    <Button
-        android:text="Delete Product"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/button9"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
 
     <Button
         android:text="View Product Menu"

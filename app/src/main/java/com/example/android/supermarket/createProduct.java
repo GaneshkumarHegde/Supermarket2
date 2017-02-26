@@ -20,7 +20,6 @@ import static android.widget.Toast.LENGTH_SHORT;
 import static java.sql.Types.NULL;
 
 public class createProduct extends AppCompatActivity {
-private static final int CAMERA_REQUEST=123;
     public int pno,pprice,pdiscount;
     public String pname;
     @Override

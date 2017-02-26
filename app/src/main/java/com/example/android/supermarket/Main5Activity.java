@@ -95,4 +95,8 @@ public class Main5Activity extends AppCompatActivity
         Intent i=new Intent(this,MainActivity.class);
         startActivity(i);
     }
+    public void v(View view){
+        Intent intent=new Intent(this, com.example.android.supermarket.View.class);
+        startActivity(intent);
+    }
 }

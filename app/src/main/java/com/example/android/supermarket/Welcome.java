@@ -3,6 +3,7 @@ package com.example.android.supermarket;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,10 @@ public class Welcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+            System.exit(0);       }
+        else{
         Toolbar toolbar = (Toolbar) findViewById(R.id.myToolbar);
        // setSupportActionBar(toolbar);
         //ActionBar actionBar = getSupportActionBar();
@@ -43,7 +48,9 @@ public class Welcome extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
+
+
+    }}
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

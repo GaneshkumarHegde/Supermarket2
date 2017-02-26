@@ -60,6 +60,8 @@
             android:layout_weight="10">
 
             <ImageButton
+                android:onClick="v"
+                android:id="@+id/i2"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_row="0"

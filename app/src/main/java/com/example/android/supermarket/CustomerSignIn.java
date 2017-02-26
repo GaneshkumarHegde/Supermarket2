@@ -44,9 +44,9 @@ else{
     });
 
 
-    builder.create().show();
-    Toast.makeText(this,pswd+"\t"+cpswd,Toast.LENGTH_SHORT).show();
-
+   // builder.create().show();
+  //  Toast.makeText(this,pswd+"\t"+cpswd,Toast.LENGTH_SHORT).show();
+    Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
 }
     }
     public void back(View view){

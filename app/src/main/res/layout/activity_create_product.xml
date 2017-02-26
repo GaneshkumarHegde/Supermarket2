@@ -40,6 +40,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/ProductNo"/>
     </LinearLayout>
+    <EditText
+        android:layout_marginTop="20dp"
+
+        android:drawableLeft="@drawable/ic_dialpad_black_24dp"
+        android:hint="Quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/quantity"/>
     <LinearLayout
         android:layout_marginTop="20dp"
 
@@ -73,7 +81,8 @@
 
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <Button
             android:layout_width="100dp"
@@ -87,12 +96,13 @@
             android:layout_height="wrap_content"
             android:text="Open Gallery"
             android:onClick="gallery"/>
+
         <ImageView
 
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_width="81dp"
+            android:layout_height="62dp"
             android:gravity="center"
-            android:id="@+id/imageView"/>
+            android:id="@+id/imageView" />
     </LinearLayout>
     <Button
 

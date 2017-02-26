@@ -1,6 +1,7 @@
 package com.example.android.supermarket;
 
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -50,7 +51,17 @@ public  void customerLogin(View view){
         startActivity(i);
 
     }
+public void exit(View view){
+    finishAffinity();
+    /*Intent intent = new Intent(getApplicationContext(), Welcome.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    intent.putExtra("EXIT", true);
+    startActivity(intent);*/
+}
+    @Override
+    public void onBackPressed(){
 
+    }
 }
 
 

@@ -84,7 +84,7 @@ public class adminLogin extends Fragment  {
                             startActivity(myIntent);
                         }
             }catch (Exception e) {
-                        Toast.makeText(getActivity(),"Invalid Entries",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getActivity(),"Invalid Entries",Toast.LENGTH_SHORT).show();
                         Intent myIntent = new Intent(getActivity(), Main2Activity.class);
                         startActivity(myIntent);
                     }   } });
