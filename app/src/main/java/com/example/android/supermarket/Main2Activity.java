@@ -25,4 +25,8 @@ public class Main2Activity extends AppCompatActivity {
         Intent i=new Intent(this,displayProducts.class);
         startActivity(i);
     }
+    public void viewProduct(View view){
+        Intent i=new Intent(this,ViewProductMenu.class);
+        startActivity(i);
+    }
 }

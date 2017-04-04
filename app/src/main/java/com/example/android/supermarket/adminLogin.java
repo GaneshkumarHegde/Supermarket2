@@ -69,25 +69,7 @@ public class adminLogin extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v= inflater.inflate(R.layout.fragment_admin_login, container, false);
-        Button newPage = (Button)v.findViewById(R.id.login);
-        newPage.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                    try{
-                        EditText e2=(EditText)v.findViewById(R.id.Password);
-                        String pswd=e2.getText().toString();
-                        EditText e1=(EditText)v.findViewById(R.id.Name);
-                        String name=e1.getText().toString();
-                        if(name=="Ganesh" && pswd=="Ganesh") {
-                            Intent myIntent = new Intent(getActivity(), Main2Activity.class);
-                            startActivity(myIntent);
-                        }
-            }catch (Exception e) {
-                       // Toast.makeText(getActivity(),"Invalid Entries",Toast.LENGTH_SHORT).show();
-                        Intent myIntent = new Intent(getActivity(), Main2Activity.class);
-                        startActivity(myIntent);
-                    }   } });
       return v;
     }
 

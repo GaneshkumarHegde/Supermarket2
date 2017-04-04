@@ -34,7 +34,8 @@
             android:label="Super Market"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".View" />
-        <activity android:name=".Modify"></activity>
+        <activity android:name=".Modify" />
+        <activity android:name=".ViewProductMenu"></activity>
     </application>
 
 </manifest>

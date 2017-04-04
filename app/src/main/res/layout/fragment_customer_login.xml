@@ -16,6 +16,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/cName"
                 android:hint="Name"
                 android:drawableLeft="@drawable/ic_person_black_24dp"
                 android:layout_marginTop="20dp"
@@ -42,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
-                android:id="@+id/Password"
+                android:id="@+id/cPassword"
                 android:layout_weight="1" />
 
 
