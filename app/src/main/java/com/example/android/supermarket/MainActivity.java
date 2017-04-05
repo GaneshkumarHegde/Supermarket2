@@ -1,11 +1,13 @@
 package com.example.android.supermarket;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,20 +20,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    SQLiteDatabase db;
+   // SQLiteDatabase db;
+   private ProgressDialog progressDialog;
 
-   // private FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
 
     Button admin,customer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = openOrCreateDatabase("CustomerDB", Context.MODE_WORLD_WRITEABLE, null);
-      //  firebaseAuth=FirebaseAuth.getInstance();
+       // db = openOrCreateDatabase("CustomerDB", Context.MODE_WORLD_WRITEABLE, null);
+        firebaseAuth=FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
 
 
     }
@@ -61,7 +68,8 @@ public  void customerLogin(View view){
     String name=e1.getText().toString();
     StringBuffer pswd=new StringBuffer();
 pswd.append(e2.getText().toString());
-
+    progressDialog.setMessage("Please Wait...");
+    progressDialog.show();
     if(e1.getText().toString().trim().length()==0 || e2.getText().toString().trim().length()==0 ){
 
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
@@ -78,30 +86,28 @@ pswd.append(e2.getText().toString());
 
 
         builder.create().show();
+        progressDialog.dismiss();
+
     }
     else{
 
-    Cursor c=db.rawQuery("SELECT pswd FROM customer WHERE name='"+name+"' ", null);
+        firebaseAuth.signInWithEmailAndPassword(name, pswd.toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //if the task is successfull
+                        if(task.isSuccessful()){
+                            //start the profile activity
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), Main5Activity.class));
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this,"Invalid Email or Password",Toast.LENGTH_LONG).show();
+                        }
+                        progressDialog.dismiss();
 
-    if(c.getCount()==0)
-    { Toast.makeText(this,"Username does not exist", Toast.LENGTH_LONG).show();
-        return;
-    }
-StringBuffer buffer=new StringBuffer();
-
-    while(c.moveToNext()){
-        buffer.append(c.getString(0));
-
-
-    }
-if( buffer.toString().equals(pswd.toString()) ) {
-
-    Intent myIntent = new Intent(this, Main5Activity.class);
-    startActivity(myIntent);
-}
-else{
-    Toast.makeText(this,"Invalid Password\t"+buffer+"\t"+pswd,Toast.LENGTH_SHORT).show();
-}
+                }
+                });
 
 
 

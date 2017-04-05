@@ -22,7 +22,7 @@ public class Main3Activity extends AppCompatActivity {
         actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+          //  getActionBar().setDisplayHomeAsUpEnabled(false);
 
     }
     @Override
@@ -31,14 +31,7 @@ public class Main3Activity extends AppCompatActivity {
         return true;}
         return super.onOptionsItemSelected(item);
     }
-    public void clickMenu(View view){
-      /*  Button button=(Button)findViewById(R.id.b);;
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-        actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        getActionBar().setDisplayHomeAsUpEnabled(true);*/
-    }
+
     public void clickBack(View view){
         Intent i=new Intent(this,MainActivity.class);
         startActivity(i);
