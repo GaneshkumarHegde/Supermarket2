@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
     SQLiteDatabase db;
 
-    private FirebaseAuth firebaseAuth;
+   // private FirebaseAuth firebaseAuth;
 
     Button admin,customer;
     @Override
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = openOrCreateDatabase("CustomerDB", Context.MODE_WORLD_WRITEABLE, null);
-        firebaseAuth=FirebaseAuth.getInstance();
+      //  firebaseAuth=FirebaseAuth.getInstance();
 
 
     }
