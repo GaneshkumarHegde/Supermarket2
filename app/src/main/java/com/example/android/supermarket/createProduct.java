@@ -11,18 +11,31 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import static android.R.attr.data;
 import static android.widget.Toast.LENGTH_SHORT;
+import static com.example.android.supermarket.R.attr.title;
 import static java.sql.Types.NULL;
 
 public class createProduct extends AppCompatActivity {
-    SQLiteDatabase db;
+    //SQLiteDatabase db;
+    private DatabaseReference mDatabase;
+
     ImageView imageview;
     public int pno,pprice,pdiscount,q;
     public String pname;
@@ -30,8 +43,9 @@ public class createProduct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_product);
-        db = openOrCreateDatabase("ProductsDB", Context.MODE_WORLD_WRITEABLE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS products(pname VARCHAR,pnumber VARCHAR,quantity VARCHAR,price VARCHAR,discount VARCHAR);");
+        mDatabase = FirebaseDatabase.getInstance().getReference("Products");
+      //  db = openOrCreateDatabase("ProductsDB", Context.MODE_WORLD_WRITEABLE, null);
+      //  db.execSQL("CREATE TABLE IF NOT EXISTS products(pname VARCHAR,pnumber VARCHAR,quantity VARCHAR,price VARCHAR,discount VARCHAR);");
     }
 
     public void openCamera(View view){
@@ -68,39 +82,41 @@ EditText e5=(EditText)findViewById(R.id.quantity);
         EditText e2=(EditText)findViewById(R.id.ProductNo);
         EditText e3=(EditText)findViewById(R.id.ProductPrice);
         EditText e4=(EditText)findViewById(R.id.ProductDiscount);
-        if(e1.getText().toString().trim().length()==0 ||e2.getText().toString().trim().length()==0||e3.getText().toString().trim().length()==0||e4.getText().toString().trim().length()==0)
-        {
-            // Toast.makeText(this,"Enter all fields",LENGTH_SHORT).show();
-            AlertDialog.Builder builder=new AlertDialog.Builder(this);
-            builder.setCancelable(false);
-            builder.setTitle("Error") ;
-            builder.setMessage("Enter all the fields");
-            builder.setPositiveButton("Ok",new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog,int which){
-                    //  finish();
-                }
-            });
-
-
-            builder.create().show();
+        if(TextUtils.isEmpty(e1.getText().toString())){
+            e1.setError("Required");
 
         }
-        else {
+        if(TextUtils.isEmpty(e2.getText().toString())){
+            e2.setError("Required");
+
+        }
+        if(TextUtils.isEmpty(e3.getText().toString())){
+            e3.setError("Required");
+
+        }
+        if(TextUtils.isEmpty(e4.getText().toString())){
+            e4.setError("Required");
+
+        }
+        if(TextUtils.isEmpty(e5.getText().toString())){
+            e5.setError("Required");
+
+        }
+        if(!((TextUtils.isEmpty(e1.getText().toString()))||(TextUtils.isEmpty(e2.getText().toString())) ||(TextUtils.isEmpty(e3.getText().toString())) ||(TextUtils.isEmpty(e4.getText().toString())) ||  (TextUtils.isEmpty(e5.getText().toString()))  )) {
             q=Integer.parseInt(e5.getText().toString());
             pname = e1.getText().toString();
             pno = Integer.parseInt(e2.getText().toString());
             pprice = Integer.parseInt(e3.getText().toString());
             pdiscount = Integer.parseInt(e4.getText().toString());
-            db.execSQL("INSERT INTO products VALUES('"+pname+"','"+pno+"','"+pprice+"','"+q+"','"+pdiscount+"');");
+            Product product=new Product(pname,pno,q,pdiscount,pprice);
+
+            String productId = mDatabase.push().getKey();
+            mDatabase.child(productId).setValue(product);
 
             Toast.makeText(this, "Product with product number " + pno + "  created Successfully  ", LENGTH_SHORT).show();
 
 
-        }
-
-    }
+    }}
     public void gallery(View view){
         Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

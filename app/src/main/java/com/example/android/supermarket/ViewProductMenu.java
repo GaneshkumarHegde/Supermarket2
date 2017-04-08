@@ -5,34 +5,42 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class ViewProductMenu extends AppCompatActivity {
-SQLiteDatabase db;
+    private DatabaseReference mDatabase;
+TextView textView;
+    String s;
+    String URL_PRODUCTS="https://console.firebase.google.com/project/supermarket2-80016/database/data/Products";
+String userId="KhCm8DZpg72BBXCISCC";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_product_menu);
-        db = openOrCreateDatabase("ProductsDB", Context.MODE_WORLD_WRITEABLE, null);
-        Cursor c=db.rawQuery("SELECT * FROM products", null);
-        if(c.getCount()==0)
-        { Toast.makeText(this,"No records found", Toast.LENGTH_LONG).show();
-            return;
-        }             StringBuffer buffer=new StringBuffer();String i;
-        while(c.moveToNext())
-        {
-            buffer.append("Products name: "+c.getString(0)+"\n");
-            buffer.append("Product Number: "+c.getString(1)+"\n");
-            buffer.append("Price: "+c.getString(2)+"\n");
-            buffer.append("Quantity: "+c.getString(3)+"\n");
-            buffer.append("Discount: "+c.getString(4)+"\n\n");
+        textView=(TextView)findViewById(R.id.printProducts);
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Products");
+        mDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                Product product = dataSnapshot.getValue(Product.class);
+s="Product Name: "+product.getName();
+textView.setText(s);            }
 
-        }
-        TextView textView=(TextView)findViewById(R.id.printProducts);
-        textView.setText(buffer);
-
-    }
-}
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }}

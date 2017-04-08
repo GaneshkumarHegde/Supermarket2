@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -37,50 +38,53 @@ firebaseAuth=FirebaseAuth.getInstance();
         EditText e2=(EditText)findViewById(R.id.email);
         EditText e3=(EditText)findViewById(R.id.pswd);
         EditText e4=(EditText)findViewById(R.id.cpswd);
+
+        progressDialog.setMessage("Registering Please Wait...");
+        progressDialog.show();
+        if(TextUtils.isEmpty(e1.getText().toString())){
+            e1.setError("Required");
+            progressDialog.dismiss();
+
+        }
+        if(TextUtils.isEmpty(e2.getText().toString())){
+            e2.setError("Required");
+            progressDialog.dismiss();
+
+        }
+        if(TextUtils.isEmpty(e3.getText().toString())){
+            e3.setError("Required");
+            progressDialog.dismiss();
+
+        }
+        if(TextUtils.isEmpty(e4.getText().toString())){
+            e4.setError("Required");
+            progressDialog.dismiss();
+
+        }
         String Name= e1.getText().toString();
         String email= e2.getText().toString();
         String pswd= e3.getText().toString();
         String cpswd= e4.getText().toString();
-        progressDialog.setMessage("Registering Please Wait...");
-        progressDialog.show();
-        if(e1.getText().toString().trim().length()==0 ||e2.getText().toString().trim().length()==0||e3.getText().toString().trim().length()==0||e4.getText().toString().trim().length()==0) {
-            AlertDialog.Builder builder=new AlertDialog.Builder(this);
-            builder.setCancelable(false);
-            builder.setTitle("Error") ;
-            builder.setMessage("Enter all the fields");
-            builder.setPositiveButton("Ok",new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog,int which){
-                    //  finish();
-                }
-            });
+       if(!((TextUtils.isEmpty(e4.getText().toString()))||(TextUtils.isEmpty(e3.getText().toString())))) {
+           if (!pswd.equals(cpswd)) {
+               AlertDialog.Builder builder = new AlertDialog.Builder(this);
+               builder.setCancelable(false);
+               builder.setTitle("Note");
+               builder.setMessage("Passwords don't match");
+               builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialog, int which) {
+                       //  finish();
+                   }
+               });
 
 
-            builder.create().show();
-            progressDialog.dismiss();
+               builder.create().show();
+               progressDialog.dismiss();
 
-        }
-       else if(!pswd.equals(cpswd)){
-            AlertDialog.Builder builder=new AlertDialog.Builder(this);
-            builder.setCancelable(false);
-            builder.setTitle("Note") ;
-            builder.setMessage("Passwords don't match");
-            builder.setPositiveButton("Ok",new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog,int which){
-                    //  finish();
-                }
-            });
-
-
-            builder.create().show();
-            progressDialog.dismiss();
-
-        }
-
-        else{
+           }
+       }
+        if(!((TextUtils.isEmpty(e1.getText().toString()))||(TextUtils.isEmpty(e2.getText().toString())) ||(TextUtils.isEmpty(e3.getText().toString())) ||(TextUtils.isEmpty(e4.getText().toString()))   )) {
 
             firebaseAuth.createUserWithEmailAndPassword(email, pswd)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

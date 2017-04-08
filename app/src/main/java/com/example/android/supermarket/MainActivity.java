@@ -70,26 +70,15 @@ public  void customerLogin(View view){
 pswd.append(e2.getText().toString());
     progressDialog.setMessage("Please Wait...");
     progressDialog.show();
-    if(e1.getText().toString().trim().length()==0 || e2.getText().toString().trim().length()==0 ){
-
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setTitle("Error") ;
-        builder.setMessage("Enter all the fields");
-        builder.setPositiveButton("Ok",new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog,int which){
-                //  finish();
-            }
-        });
-
-
-        builder.create().show();
-        progressDialog.dismiss();
+    if(e1.getText().toString().trim().length()==0 ){
+e1.setError("Required");                        progressDialog.dismiss();
 
     }
-    else{
+    if(e2.getText().toString().trim().length()==0 ){
+        e2.setError("Required");                        progressDialog.dismiss();
+
+    }
+    if(!((e2.getText().toString().trim().length()==0)   ||(e1.getText().toString().trim().length()==0))  ){
 
         firebaseAuth.signInWithEmailAndPassword(name, pswd.toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -136,15 +125,15 @@ public void exit(View view){
         String name=e1.getText().toString();
        // Toast.makeText(this,name+"\t"+pswd,Toast.LENGTH_SHORT).show();
 
-        if(name.equals("Ganesh") && pswd.equals("Ganesh")) {
+      //  if(name.equals("Ganesh") && pswd.equals("Ganesh")) {
             Intent myIntent = new Intent(this, Main2Activity.class);
             startActivity(myIntent);
-        }
-        else{
-             Toast.makeText(this,"Invalid Name or Password",Toast.LENGTH_SHORT).show();
+       // }
+        //else{
+        //     Toast.makeText(this,"Invalid Name or Password",Toast.LENGTH_SHORT).show();
 
         }
     }
-}
+
 
 
