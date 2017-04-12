@@ -49,84 +49,20 @@
                 android:background="@color/common_google_signin_btn_text_dark_default"
                 android:layout_marginBottom="10dp"></SearchView>
         </LinearLayout>
-        <GridLayout
+       <ListView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/list1">
 
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:rowCount="4"
-            android:columnCount="2"
-            android:id="@+id/glayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10">
-
-            <ImageButton
-                android:id="@+id/i2"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_row="0"
-                android:layout_rowWeight="1"
-                android:onClick="v"
-                android:src="@mipmap/ic_launcher_lg" />
-            <ImageButton
-
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_row="0"
-                android:layout_column="1"
-                android:src="@mipmap/ic_launcher_hp"/>
-            <ImageButton
-
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:src="@mipmap/ic_launcher_lg"/>
-            <ImageButton
-
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_column="1"
-                android:src="@mipmap/ic_launcher_mi5"/>
-            <ImageButton
-
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_row="2"
-                android:layout_column="0"
-                android:src="@mipmap/ic_launcher_redmi_note4"/>
-            <ImageButton
-
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_row="2"
-                android:layout_column="1"
-                android:src="@mipmap/ic_launcher_headphone"/>
-
-            <ImageButton
-
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_row="3"
-                android:layout_rowWeight="1"
-                android:src="@mipmap/ic_launcher_samsung_on8" />
-            <ImageButton
-
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_row="3"
-                android:layout_column="1"
-                android:src="@mipmap/ic_launcher_vu"/>
-        </GridLayout>
+       </ListView>
         <Button
             android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
+            android:layout_gravity="bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back"
             android:onClick="clickBack"
-            android:layout_below="@+id/glayout"/></LinearLayout>
+           /></LinearLayout>
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

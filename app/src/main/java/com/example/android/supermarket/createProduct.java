@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +46,7 @@ public class createProduct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_product);
-        mDatabase = FirebaseDatabase.getInstance().getReference("Products");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
       //  db = openOrCreateDatabase("ProductsDB", Context.MODE_WORLD_WRITEABLE, null);
       //  db.execSQL("CREATE TABLE IF NOT EXISTS products(pname VARCHAR,pnumber VARCHAR,quantity VARCHAR,price VARCHAR,discount VARCHAR);");
     }
@@ -110,10 +113,21 @@ EditText e5=(EditText)findViewById(R.id.quantity);
             pdiscount = Integer.parseInt(e4.getText().toString());
             Product product=new Product(pname,pno,q,pdiscount,pprice);
 
-            String productId = mDatabase.push().getKey();
-            mDatabase.child(productId).setValue(product);
+           // String productId = mDatabase.push().getKey();
+            mDatabase.child("Products").child(pname).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(createProduct.this, "Product  created Successfully  ", LENGTH_SHORT).show();
 
-            Toast.makeText(this, "Product with product number " + pno + "  created Successfully  ", LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(createProduct.this, "Error", LENGTH_SHORT).show();
+
+                    }
+                }
+            });
+
 
 
     }}

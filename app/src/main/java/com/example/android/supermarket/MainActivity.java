@@ -51,12 +51,14 @@ public void onClickAdmin(View view){
 
 }
     public  void clickCustomer(View view){
-        CustomerLogin c=new CustomerLogin();
+    /*     CustomerLogin c=new CustomerLogin();
         FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container,c);
         transaction.addToBackStack(null);
         transaction.commit();
-
+*/
+      Intent intent=new Intent(this,Main6Activity.class);
+startActivity(intent);
     }
 
 
@@ -118,22 +120,44 @@ public void exit(View view){
         finishAffinity();
 
     }
-    public void adminLogin(View view){
-        EditText e2=(EditText)findViewById(R.id.Password1);
-        String pswd=e2.getText().toString();
-        EditText e1=(EditText)findViewById(R.id.Name1);
-        String name=e1.getText().toString();
-       // Toast.makeText(this,name+"\t"+pswd,Toast.LENGTH_SHORT).show();
-
-      //  if(name.equals("Ganesh") && pswd.equals("Ganesh")) {
-            Intent myIntent = new Intent(this, Main2Activity.class);
-            startActivity(myIntent);
-       // }
-        //else{
-        //     Toast.makeText(this,"Invalid Name or Password",Toast.LENGTH_SHORT).show();
+    public void adminLogin(View view) {
+        EditText e2 = (EditText) findViewById(R.id.Password1);
+        String pswd = e2.getText().toString();
+        EditText e1 = (EditText) findViewById(R.id.Name1);
+        String name = e1.getText().toString();
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+        if (e1.getText().toString().trim().length() == 0) {
+            e1.setError("Required");
+            progressDialog.dismiss();
 
         }
-    }
+        if (e2.getText().toString().trim().length() == 0) {
+            e2.setError("Required");
+            progressDialog.dismiss();
+
+        }
+        if (!((e2.getText().toString().trim().length() == 0) || (e1.getText().toString().trim().length() == 0))) {
+
+
+            firebaseAuth.signInWithEmailAndPassword(name, pswd.toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            //if the task is successfull
+                            if (task.isSuccessful()) {
+                                //start the profile activity
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), Main2Activity.class));
+                            } else {
+                                Toast.makeText(MainActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
+                            }
+                            progressDialog.dismiss();
+
+                        }
+                    });
+        }
+    }}
 
 
 

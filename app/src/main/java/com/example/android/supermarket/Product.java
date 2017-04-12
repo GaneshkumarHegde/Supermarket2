@@ -20,7 +20,8 @@ private float price,discount;
         this.quantity = quantity;
         this.price = price;
         this.discount = discount;
-    }    public String getName() {
+    }
+    public String getName() {
         return name;
     }
 
@@ -45,4 +46,8 @@ private float price,discount;
         return discount;
     }
 
+    public void decreaseQuantity(){
+        this.quantity=this.quantity-1;
+        Product product=new Product(name,number,quantity,discount,price);
+    }
     }
