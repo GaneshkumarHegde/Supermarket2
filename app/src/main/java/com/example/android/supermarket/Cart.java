@@ -31,23 +31,13 @@ StringBuffer sb=new StringBuffer();
         Intent i=getIntent();
         float cartValue=i.getFloatExtra("CartValue",0);
         String cartItems=i.getStringExtra("CartItems");
-        String s[]=cartItems.split(" ");
-        s = new HashSet<String>(Arrays.asList(s)).toArray(new String[0]);
-        for(int j=0;j<s.length;j++){
-
-          sb.append(s[j]+" ");
-        }
+        Toast.makeText(this,""+cartValue+"\t"+cartItems,Toast.LENGTH_LONG).show();
 
 
-        List asList = Arrays.asList(cartItems);
-        Set<String> mySet = new HashSet<String>(asList);
-        for(String a: mySet){
 
-            sb1.append(a+ " " + Collections.frequency(asList,a)+"\n");
 
-        }
 
-        Toast.makeText(this,""+cartValue+"\t"+sb1,Toast.LENGTH_LONG).show();
+
 
     }
 }

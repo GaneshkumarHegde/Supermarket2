@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main6Activity extends AppCompatActivity {
+    int quantitySelected;
     private DatabaseReference mDatabase;
     private TextView textView;
     private ListView listView;
@@ -38,6 +40,7 @@ public class Main6Activity extends AppCompatActivity {
     float cart=0;
 ArrayList<String> cartList=new ArrayList<>();
     private ArrayList<String> list=new ArrayList<>();
+    public  AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,14 +100,23 @@ ArrayList<String> cartList=new ArrayList<>();
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 p1 = position;
+                final NumberPicker numberPicker = new NumberPicker(Main6Activity.this);
+                numberPicker.setMaxValue(360);
+                numberPicker.setMinValue(0);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Main6Activity.this);
-                builder.setCancelable(true);
+                 builder = new AlertDialog.Builder(Main6Activity.this);
+              //  builder.setCancelable(true);
                 builder.setTitle("Buy");
-                builder.setMessage("Do u want to buy this item?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setMessage("Select Quantity:");
+                builder.setView(numberPicker);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                         quantitySelected=numberPicker.getValue();
+                     //     Toast.makeText(Main6Activity.this,""+quantitySelected,Toast.LENGTH_SHORT).show();
+
                         long val = arrayAdapter.getItemId(p1);
                         String s = arrayAdapter.getItem(p1);
                         String[] s1 = s.split(" ");
@@ -118,9 +130,9 @@ ArrayList<String> cartList=new ArrayList<>();
                                 Product p = dataSnapshot.getValue(Product.class);
                                 int a = p.getQuantity();
                               //  Toast.makeText(Main6Activity.this, "" + a, Toast.LENGTH_SHORT).show();
-                                cart+=p.getPrice()-((p.getPrice()*p.getDiscount())/100);
-                                sb.append(p.getName()+" ");
-                                dataSnapshot.getRef().child("quantity").setValue(a - 1);
+                                cart+=p.getPrice()*quantitySelected-((p.getPrice()*p.getDiscount())/100);
+                                sb.append(p.getName()+"\tx\t "+quantitySelected+"\n");
+                                dataSnapshot.getRef().child("quantity").setValue(a - quantitySelected);
                                 Toast.makeText(Main6Activity.this,"Item added to your cart",Toast.LENGTH_LONG).show();
 
                             }
@@ -135,6 +147,11 @@ ArrayList<String> cartList=new ArrayList<>();
                 p.decreaseQuantity();
 
                mDatabase.setValue(p);*/
+                    }
+                }); builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
                     }
                 });
                 builder.create().show();
@@ -154,7 +171,6 @@ ArrayList<String> cartList=new ArrayList<>();
 
 
        Intent i=new Intent(this,Cart.class);
-        Toast.makeText(Main6Activity.this,""+sb,Toast.LENGTH_LONG).show();
         i.putExtra("CartValue",cart);
         i.putExtra("CartItems",sb.toString());
         startActivity(i);
