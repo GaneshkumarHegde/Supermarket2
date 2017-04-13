@@ -28,4 +28,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+<style name="cust_dialog" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+</style>
 </resources>
