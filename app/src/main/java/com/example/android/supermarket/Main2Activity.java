@@ -21,12 +21,16 @@ public class Main2Activity extends AppCompatActivity {
         Intent i=new Intent(this,createProduct.class);
         startActivity(i);
     }
-    public void display(View view){
-        Intent i=new Intent(this,displayProducts.class);
+    public void modify(View view){
+        Intent i=new Intent(this,Modify.class);
         startActivity(i);
     }
     public void viewProduct(View view){
         Intent i=new Intent(this,ViewProductMenu.class);
         startActivity(i);
+    }
+    public void offers(View view){
+        Intent intent=new Intent(this,Offers.class);
+        startActivity(intent);
     }
 }

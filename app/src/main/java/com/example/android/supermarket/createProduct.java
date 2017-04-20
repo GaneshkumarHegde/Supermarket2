@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +39,12 @@ import static java.sql.Types.NULL;
 public class createProduct extends AppCompatActivity {
     //SQLiteDatabase db;
     private DatabaseReference mDatabase;
-
+RadioButton r1;
+    RadioButton r2;
     ImageView imageview;
     public int pno,pprice,pdiscount,q;
     public String pname;
+    String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,10 +88,20 @@ EditText e5=(EditText)findViewById(R.id.quantity);
         EditText e2=(EditText)findViewById(R.id.ProductNo);
         EditText e3=(EditText)findViewById(R.id.ProductPrice);
         EditText e4=(EditText)findViewById(R.id.ProductDiscount);
+        r1=(RadioButton)findViewById(R.id.starter);
+        r2=(RadioButton)findViewById(R.id.mainCourse);
+        if(r1.isChecked()){
+            type=r1.getText().toString();
+        }
+        else{
+            type=r2.getText().toString();
+
+        }
         if(TextUtils.isEmpty(e1.getText().toString())){
             e1.setError("Required");
 
         }
+        Toast.makeText(this,""+type,LENGTH_SHORT).show();
         if(TextUtils.isEmpty(e2.getText().toString())){
             e2.setError("Required");
 

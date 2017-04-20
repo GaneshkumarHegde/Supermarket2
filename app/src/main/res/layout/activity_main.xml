@@ -5,38 +5,46 @@
     android:id="@+id/activity_main" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFF"
     tools:context="com.example.android.supermarket.MainActivity">
 
     <Button
+        android:background="#137d9e"
+        android:textColor="#FFF"
         android:layout_weight="1"
         android:text="Administrator"
-        android:textSize="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:textSize="15dp"
+
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:onClick="onClickAdmin"
 
-        android:id="@+id/button" />
+        android:id="@+id/button" /> <Button        android:layout_weight="1"
+    android:background="#137d9e"
+    android:textColor="#FFF"
+    android:text="Customer"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="20dp"
+    android:layout_width="200dp"
+    android:layout_height="50dp"
+    android:textSize="15dp"
 
-    <Button        android:layout_weight="1"
-
-        android:text="Customer"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-
-        android:onClick="clickCustomer"
-        android:id="@+id/button2" />
+    android:onClick="clickCustomer"
+    android:id="@+id/button2" />
     <RelativeLayout
-        android:layout_weight="5"
-        android:layout_marginTop="20dp"
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:id="@+id/fragment_container"></RelativeLayout>
+        android:layout_marginTop="20dp"
+        android:layout_weight="5"></RelativeLayout>
+
+
+
     <Button
+        android:background="#137d9e"
+    android:textColor="#FFF"
         android:onClick="exit"
         android:layout_weight="1"
         android:text="Exit"

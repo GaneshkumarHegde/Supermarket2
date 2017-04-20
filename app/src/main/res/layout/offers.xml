@@ -1,0 +1,17 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <CheckBoxPreference
+
+        android:key="mypreference_checkbox1"
+        android:title="Checkbox"
+    android:defaultValue="false"
+        android:summary="10 % off on all orders"/>
+    <CheckBoxPreference
+        android:key="mypreference_checkbox2"
+        android:title="Checkbox"
+        android:defaultValue="false"
+        android:summary="10 % off on all orders above Rs.500"/>
+
+</PreferenceScreen>

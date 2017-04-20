@@ -8,19 +8,24 @@
     tools:context="com.example.android.supermarket.Main6Activity">
 
 <ListView
+
     app:layout_goneMarginTop="100dp"
-    android:layout_width="wrap_content"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:id="@+id/l"
-    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="100dp"></ListView>
 
     <Button
+        android:textSize="13dp"
+
+        android:background="#137d9e"
+        android:textColor="#FFF"
         app:layout_constraintBottom_toBottomOf="@+id/l"
         android:text="Go to cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="checkCart"
-        />
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>

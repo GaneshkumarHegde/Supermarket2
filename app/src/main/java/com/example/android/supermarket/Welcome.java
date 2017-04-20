@@ -3,7 +3,6 @@ package com.example.android.supermarket;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,14 +27,10 @@ public class Welcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        if (getIntent().getBooleanExtra("EXIT", false)) {
-            finish();
-            System.exit(0);       }
-        else{
         Toolbar toolbar = (Toolbar) findViewById(R.id.myToolbar);
-       // setSupportActionBar(toolbar);
-        //ActionBar actionBar = getSupportActionBar();
-       // actionBar.hide();
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -47,10 +42,8 @@ public class Welcome extends AppCompatActivity {
         }, secondsDelayed * 3000);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-//        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
-    }}
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -84,7 +77,7 @@ public class Welcome extends AppCompatActivity {
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-       // AppIndex.AppIndexApi.end(client, getIndexApiAction());
-       /// client.disconnect();
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

@@ -3,12 +3,17 @@ package com.example.android.supermarket;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,6 +35,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main6Activity extends AppCompatActivity {
+    private ProgressDialog progressDialog;
+
     int quantitySelected;
     private DatabaseReference mDatabase;
     private TextView textView;
@@ -101,8 +108,8 @@ ArrayList<String> cartList=new ArrayList<>();
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 p1 = position;
                 final NumberPicker numberPicker = new NumberPicker(Main6Activity.this);
-                numberPicker.setMaxValue(360);
-                numberPicker.setMinValue(0);
+                numberPicker.setMaxValue(10);
+                numberPicker.setMinValue(1);
 
                  builder = new AlertDialog.Builder(Main6Activity.this);
               //  builder.setCancelable(true);
@@ -129,14 +136,19 @@ ArrayList<String> cartList=new ArrayList<>();
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Product p = dataSnapshot.getValue(Product.class);
                                 int a = p.getQuantity();
-                              //  Toast.makeText(Main6Activity.this, "" + a, Toast.LENGTH_SHORT).show();
-                                cart+=p.getPrice()*quantitySelected-((p.getPrice()*p.getDiscount())/100);
-                                sb.append(p.getName()+"\tx\t "+quantitySelected+"\n");
-                                dataSnapshot.getRef().child("quantity").setValue(a - quantitySelected);
-                                Toast.makeText(Main6Activity.this,"Item added to your cart",Toast.LENGTH_LONG).show();
+                                if (quantitySelected > a && quantitySelected != 1) {
+                                    Toast.makeText(Main6Activity.this, "Choose a lesser quantity", Toast.LENGTH_SHORT).show();
+                                } else if (quantitySelected == 1 && a == 0) {
+                                    Toast.makeText(Main6Activity.this, "Sorry,This item is out of Stock", Toast.LENGTH_SHORT).show();
 
+                                } else {
+                                    cart += p.getPrice() * quantitySelected - ((p.getPrice() * p.getDiscount()) / 100);
+                                    sb.append(p.getName() + "\t x \t " + quantitySelected + "\t\t="+(p.getPrice()*quantitySelected)+"\n");
+                                    dataSnapshot.getRef().child("quantity").setValue(a - quantitySelected);
+                                   Toast.makeText(Main6Activity.this, "Item added to your cart", Toast.LENGTH_LONG).show();
+
+                                }
                             }
-
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
 
@@ -168,11 +180,24 @@ ArrayList<String> cartList=new ArrayList<>();
     }
 
     public void checkCart(View view){
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        if (settings.getBoolean("mypreference_checkbox1",false )){
 
+            cart-=cart*0.1;
+        }
+        else if(cart>500){
+            if (settings.getBoolean("mypreference_checkbox2",false )) {
+                cart-=cart*0.1;
 
-       Intent i=new Intent(this,Cart.class);
+            }
+        }
+      //  Toast.makeText(this,""+o1,Toast.LENGTH_SHORT).show();
+        Intent i=new Intent(this,Cart.class);
         i.putExtra("CartValue",cart);
         i.putExtra("CartItems",sb.toString());
         startActivity(i);
+
+        sb.replace(0,sb.toString().length(),"");
+        cart=0;
     }
 }

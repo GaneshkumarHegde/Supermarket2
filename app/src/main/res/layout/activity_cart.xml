@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.android.supermarket.Cart">
-    <ListView
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/l2"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp"></ListView>
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="50dp" />
+
+    <TextView
+        android:textSize="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/print1"
+        android:textColor="#000"
+         />
+    <TextView
+        android:text="-------------------------------------------------"
+        android:textSize="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/print2"
+        android:textColor="#000"
+        />
+    <TextView
+        android:layout_gravity="center_horizontal"
+    android:textSize="30dp"
+    android:layout_marginTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/printTotal"
+    android:textColor="#000"
+    />
+    <Button
+        android:textSize="13dp"
+
+        android:background="#137d9e"
+        android:textColor="#FFF"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buy"
+        android:onClick="buy"/>
+
+</LinearLayout>
+</ScrollView>

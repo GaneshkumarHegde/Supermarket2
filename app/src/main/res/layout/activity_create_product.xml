@@ -4,121 +4,125 @@
     android:layout_width="match_parent">
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_create_product"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.android.supermarket.createProduct">
-    <LinearLayout
-        android:layout_marginTop="10dp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_create_product"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.android.supermarket.createProduct">
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
 
-    <EditText
-        android:drawableLeft="@drawable/ic_keyboard_black_24dp"
-        android:hint="Product Name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ProductName"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="20dp"
+            <EditText
+                android:drawableLeft="@drawable/ic_keyboard_black_24dp"
+                android:hint="Product Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ProductName"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
 
+            <EditText
+                android:drawableLeft="@drawable/ic_dialpad_black_24dp"
+                android:hint="Product Number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ProductNo"/>
+        </LinearLayout>
         <EditText
+            android:layout_marginTop="20dp"
+
             android:drawableLeft="@drawable/ic_dialpad_black_24dp"
-            android:hint="Product Number"
+            android:hint="Quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ProductNo"/>
-    </LinearLayout>
-    <EditText
-        android:layout_marginTop="20dp"
+            android:id="@+id/quantity"/>
+        <LinearLayout
+            android:layout_marginTop="20dp"
 
-        android:drawableLeft="@drawable/ic_dialpad_black_24dp"
-        android:hint="Quantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/quantity"/>
-    <LinearLayout
-        android:layout_marginTop="20dp"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:drawableLeft="@drawable/ic_attach_money_black_24dp"
-            android:hint="Price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ProductPrice"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <EditText
+                android:drawableLeft="@drawable/ic_attach_money_black_24dp"
+                android:hint="Price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ProductPrice"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-       >
-
-        <EditText
-            android:drawableLeft="@drawable/ic_stars_black_24dp"
-            android:hint="Discount Percentage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ProductDiscount"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            >
 
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
+            <EditText
+                android:drawableLeft="@drawable/ic_stars_black_24dp"
+                android:hint="Discount Percentage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ProductDiscount"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioGroup
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <RadioButton
+android:textSize="20dp"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Starter"
+                android:id="@+id/starter"/>
+            <RadioButton
+                android:layout_weight="1"
+                android:textSize="20dp"
+android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Main Course"
+                android:id="@+id/mainCourse"/>
+            </RadioGroup>
+        </LinearLayout>
+        <Button
+            android:textSize="13dp"
+
+            android:background="#137d9e"
+            android:textColor="#FFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:onClick="create"/>
 
         <Button
-            android:layout_width="100dp"
+            android:textSize="13dp"
+
+            android:background="#137d9e"
+            android:textColor="#FFF"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upload Photo"
-            android:onClick="openCamera"
-            />
-        <Button
+            android:text="Back"
+            android:layout_marginTop="50dp"
+            android:onClick="clickBack"/>
 
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Open Gallery"
-            android:onClick="gallery"/>
-
-        <ImageView
-
-            android:layout_width="81dp"
-            android:layout_height="62dp"
-            android:gravity="center"
-            android:id="@+id/imageView" />
-    </LinearLayout>
-    <Button
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:onClick="create"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:layout_marginTop="50dp"
-        android:onClick="clickBack"/>
 
         />
     </LinearLayout>

@@ -6,8 +6,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_icon"
-        android:label="@string/app_name"
+        android:icon="@mipmap/icon"
+        android:label="OrderYourFood"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -19,7 +19,6 @@
         </activity>
         <activity android:name=".Main2Activity" />
         <activity android:name=".Main3Activity" />
-        <activity android:name=".createProduct" />
         <activity android:name=".displayProducts" />
         <activity android:name=".CustomerSignIn" />
         <!--
@@ -38,7 +37,10 @@
         <activity android:name=".Modify" />
         <activity android:name=".ViewProductMenu" />
         <activity android:name=".Main6Activity" />
-        <activity android:name=".Cart"></activity>
+        <activity android:name=".Cart" />
+        <activity android:name=".Buy" />
+        <activity android:name=".createProduct" />
+        <activity android:name=".Offers"></activity>
     </application>
 
 </manifest>

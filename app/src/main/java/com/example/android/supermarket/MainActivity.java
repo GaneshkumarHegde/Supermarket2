@@ -46,7 +46,7 @@ public void onClickAdmin(View view){
     adminLogin c=new adminLogin();
     FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
     transaction.replace(R.id.fragment_container,c);
-    transaction.addToBackStack(null);
+    transaction.addToBackStack("Yeah");
     transaction.commit();
 
 }
