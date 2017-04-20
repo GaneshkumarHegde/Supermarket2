@@ -127,7 +127,7 @@ EditText e5=(EditText)findViewById(R.id.quantity);
             Product product=new Product(pname,pno,q,pdiscount,pprice);
 
            // String productId = mDatabase.push().getKey();
-            mDatabase.child("Products").child(pname).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+            mDatabase.child(type).child(pname).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
