@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.*;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,8 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Modify extends AppCompatActivity {
 EditText e1;
-    String name;EditText e2;
-private DatabaseReference mDatabase;
+    String name;EditText e2;RadioButton r1;
+    RadioButton r2;
+String type;
+    private DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,15 @@ private DatabaseReference mDatabase;
         e1=(EditText)findViewById(R.id.modifyItem);
         name=e1.getText().toString();
         Toast.makeText(this,"Modify the Item details now",Toast.LENGTH_SHORT).show();
+        r1=(RadioButton)findViewById(R.id.r1);
+        r2=(RadioButton)findViewById(R.id.r2);
+        if(r1.isChecked()){
+            type=r1.getText().toString();
+        }
+        else{
+            type=r2.getText().toString();
+
+        }
     }
     public void abc(android.view.View v){
         Intent intent=new Intent(this,Main2Activity.class);
@@ -46,7 +58,7 @@ private DatabaseReference mDatabase;
 
         }
         else{
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("Products").child(name);
+            mDatabase = FirebaseDatabase.getInstance().getReference().child(type).child(name);
 
             e2=new EditText(Modify.this);
             e2.setHint("Enter new value");
