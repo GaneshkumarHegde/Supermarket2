@@ -1,5 +1,6 @@
 package com.example.android.supermarket;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
@@ -22,8 +23,8 @@ public class ViewProductMenu extends AppCompatActivity {
     private  TextView textView;
     private ListView listView;
     private ArrayList<String> list=new ArrayList<>();
-String value;
-     ArrayAdapter<String> arrayAdapter;
+    String value;
+    ArrayAdapter<String> arrayAdapter;
 
     public ViewProductMenu() {
     }
@@ -40,14 +41,27 @@ String value;
     public  void starters(android.view.View view){
         list.clear();
         mDatabase= FirebaseDatabase.getInstance().getReference().child("Starter");
-        final ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
+        final ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+
+                TextView textView=(TextView) view.findViewById(android.R.id.text1);
+
+            /*YOUR CHOICE OF COLOR*/
+                textView.setTextColor(Color.BLACK);
+
+                return view;
+            }
+        };
         listView.setAdapter(arrayAdapter);
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product=dataSnapshot.getValue(Product.class);
 
-                value="Name: "+product.getName()+"\n"+"Price: "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
+                value="Name: "+product.getName()+"\n"+"Price(Rs.): "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
 
 
 
@@ -82,14 +96,27 @@ String value;
     public  void mainCourses(View view){
         list.clear();
         mDatabase= FirebaseDatabase.getInstance().getReference().child("Main Course");
-        final ArrayAdapter<String> a1=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
+        final ArrayAdapter<String> a1=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+
+                TextView textView=(TextView) view.findViewById(android.R.id.text1);
+
+            /*YOUR CHOICE OF COLOR*/
+                textView.setTextColor(Color.BLACK);
+
+                return view;
+            }
+        };
         listView.setAdapter(a1);
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product=dataSnapshot.getValue(Product.class);
 
-                value="Name: "+product.getName()+"\n"+"Price: "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
+                value="Name: "+product.getName()+"\n"+"Price(Rs.): "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
 
 
 

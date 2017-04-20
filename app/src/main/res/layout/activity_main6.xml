@@ -1,31 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/sea"
     tools:context="com.example.android.supermarket.Main6Activity">
-
-<ListView
-
-    app:layout_goneMarginTop="100dp"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:id="@+id/l"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="100dp"></ListView>
-
-    <Button
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
         android:textSize="13dp"
-
+            android:layout_weight="1"
+android:layout_marginRight="3dp"
         android:background="#137d9e"
         android:textColor="#FFF"
-        app:layout_constraintBottom_toBottomOf="@+id/l"
+        android:text="Starters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cStarters"
+        tools:layout_editor_absoluteX="0dp" />
+        <Button
+            android:textSize="13dp"
+android:layout_weight="1"
+            android:background="#137d9e"
+            android:textColor="#FFF"
+            android:text="Main Course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="cMain"
+            tools:layout_editor_absoluteX="0dp" />
+    </LinearLayout>
+    <Button
+        android:layout_marginTop="20dp"
+        android:textSize="13dp"
+android:layout_gravity="center_horizontal"
+        android:background="#137d9e"
+        android:textColor="#FFF"
         android:text="Go to cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="checkCart"
         tools:layout_editor_absoluteX="0dp" />
+    <Button
+        android:layout_marginTop="20dp"
+        android:textSize="13dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#137d9e"
+        android:textColor="#FFF"
+        android:text="Clear Cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clearCart"
+        tools:layout_editor_absoluteX="0dp" />
 
-</android.support.constraint.ConstraintLayout>
+<ListView
+    android:textColor="#000"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/l"
+   />
+
+
+
+
+</LinearLayout>

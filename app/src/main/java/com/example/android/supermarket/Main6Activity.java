@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
@@ -41,12 +42,16 @@ public class Main6Activity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private TextView textView;
     private ListView listView;
+
     String value,name;
     StringBuffer sb=new StringBuffer();
+    ArrayAdapter<String> arrayAdapter;
+
     int p1;
     float cart=0;
 ArrayList<String> cartList=new ArrayList<>();
     private ArrayList<String> list=new ArrayList<>();
+
     public  AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +60,31 @@ ArrayList<String> cartList=new ArrayList<>();
 
         mDatabase= FirebaseDatabase.getInstance().getReference().child("Products");
         listView=(ListView)findViewById(R.id.l);
-        final ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
+
+
+        list.clear();
+        mDatabase= FirebaseDatabase.getInstance().getReference().child("Starter");
+        final ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+
+                TextView textView=(TextView) view.findViewById(android.R.id.text1);
+
+            /*YOUR CHOICE OF COLOR*/
+                textView.setTextColor(Color.BLACK);
+
+                return view;
+            }
+        };
         listView.setAdapter(arrayAdapter);
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product=dataSnapshot.getValue(Product.class);
 
-                value="Name: "+product.getName()+"\n"+" Price: "+product.getPrice()+"\nDiscount: "+product.getDiscount()+"\n";
+                value="Name: "+product.getName()+" \n"+"Price(Rs.): "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
 
 
 
@@ -74,23 +96,13 @@ ArrayList<String> cartList=new ArrayList<>();
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Product p = dataSnapshot.getValue(Product.class);
-                int q = p.getQuantity();
-               // Toast.makeText(Main6Activity.this, "" + q, Toast.LENGTH_SHORT).show();
-                if (q == 0) {
-                    Intent in = new Intent(Main6Activity.this, createProduct.class);
-                    PendingIntent pending = PendingIntent.getActivity(Main6Activity.this, 0, in, 0);
-                    Notification noti = new Notification.Builder(Main6Activity.this).setContentTitle("Out of Stock").setContentText(p.getName() + " is out of stock\n").setSmallIcon(R.mipmap.ic_launcher_icon).setContentIntent(pending).build();
-                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    noti.flags |= Notification.FLAG_AUTO_CANCEL;
-                    manager.notify(0, noti);
-                }
+
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
             }
-
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
@@ -102,7 +114,6 @@ ArrayList<String> cartList=new ArrayList<>();
 
             }
         });
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -110,9 +121,14 @@ ArrayList<String> cartList=new ArrayList<>();
                 final NumberPicker numberPicker = new NumberPicker(Main6Activity.this);
                 numberPicker.setMaxValue(10);
                 numberPicker.setMinValue(1);
+                long val = arrayAdapter.getItemId(p1);
+                String s = arrayAdapter.getItem(p1);
+                String[] s1 = s.split(" ");
+                name = s1[1];
 
-                 builder = new AlertDialog.Builder(Main6Activity.this);
-              //  builder.setCancelable(true);
+
+                builder = new AlertDialog.Builder(Main6Activity.this);
+                //  builder.setCancelable(true);
                 builder.setTitle("Buy");
                 builder.setMessage("Select Quantity:");
                 builder.setView(numberPicker);
@@ -121,16 +137,10 @@ ArrayList<String> cartList=new ArrayList<>();
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                         quantitySelected=numberPicker.getValue();
-                     //     Toast.makeText(Main6Activity.this,""+quantitySelected,Toast.LENGTH_SHORT).show();
+                        quantitySelected=numberPicker.getValue();
+                        //     Toast.makeText(Main6Activity.this,""+quantitySelected,Toast.LENGTH_SHORT).show();
 
-                        long val = arrayAdapter.getItemId(p1);
-                        String s = arrayAdapter.getItem(p1);
-                        String[] s1 = s.split(" ");
-                        name = s1[1];
-                        //  Toast.makeText(Main6Activity.this,""+name+"\t"+name.trim().length(),Toast.LENGTH_SHORT).show();
-
-                        mDatabase = FirebaseDatabase.getInstance().getReference().child("Products").child(name.trim());
+                        mDatabase = FirebaseDatabase.getInstance().getReference().child("Starter").child(name.trim());
                         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -139,13 +149,13 @@ ArrayList<String> cartList=new ArrayList<>();
                                 if (quantitySelected > a && quantitySelected != 1) {
                                     Toast.makeText(Main6Activity.this, "Choose a lesser quantity", Toast.LENGTH_SHORT).show();
                                 } else if (quantitySelected == 1 && a == 0) {
-                                    Toast.makeText(Main6Activity.this, "Sorry,This item is out of Stock", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Main6Activity.this, "Sorry,This item is not available now", Toast.LENGTH_SHORT).show();
 
                                 } else {
                                     cart += p.getPrice() * quantitySelected - ((p.getPrice() * p.getDiscount()) / 100);
                                     sb.append(p.getName() + "\t x \t " + quantitySelected + "\t\t="+(p.getPrice()*quantitySelected)+"\n");
                                     dataSnapshot.getRef().child("quantity").setValue(a - quantitySelected);
-                                   Toast.makeText(Main6Activity.this, "Item added to your cart", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Main6Activity.this, "Item added", Toast.LENGTH_LONG).show();
 
                                 }
                             }
@@ -155,10 +165,7 @@ ArrayList<String> cartList=new ArrayList<>();
                             }
                         });
 
-              /*  Product p=new Product();
-                p.decreaseQuantity();
 
-               mDatabase.setValue(p);*/
                     }
                 }); builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener(){
 
@@ -170,8 +177,7 @@ ArrayList<String> cartList=new ArrayList<>();
 
                 // finish();
             }
-                });
-
+        });
 
 
 
@@ -197,7 +203,256 @@ ArrayList<String> cartList=new ArrayList<>();
         i.putExtra("CartItems",sb.toString());
         startActivity(i);
 
+
+    }
+
+    public void cStarters(View view){
+
+        listView=(ListView)findViewById(R.id.l);
+
+
+        list.clear();
+        mDatabase= FirebaseDatabase.getInstance().getReference().child("Starter");
+        final ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+
+                TextView textView=(TextView) view.findViewById(android.R.id.text1);
+
+            /*YOUR CHOICE OF COLOR*/
+                textView.setTextColor(Color.BLACK);
+
+                return view;
+            }
+        };
+        listView.setAdapter(arrayAdapter);
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Product product=dataSnapshot.getValue(Product.class);
+
+                value="Name: "+product.getName()+" \n"+"Price(Rs.): "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
+
+
+
+
+                list.add(value);
+
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                p1 = position;
+                final NumberPicker numberPicker = new NumberPicker(Main6Activity.this);
+                numberPicker.setMaxValue(10);
+                numberPicker.setMinValue(1);
+                long val = arrayAdapter.getItemId(p1);
+                String s = arrayAdapter.getItem(p1);
+                String[] s1 = s.split(" ");
+                name = s1[1];
+
+
+                builder = new AlertDialog.Builder(Main6Activity.this);
+                //  builder.setCancelable(true);
+                builder.setTitle("Buy");
+                builder.setMessage("Select Quantity:");
+                builder.setView(numberPicker);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        quantitySelected=numberPicker.getValue();
+                        //     Toast.makeText(Main6Activity.this,""+quantitySelected,Toast.LENGTH_SHORT).show();
+
+                                               mDatabase = FirebaseDatabase.getInstance().getReference().child("Starter").child(name.trim());
+                        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Product p = dataSnapshot.getValue(Product.class);
+                                int a = p.getQuantity();
+                                if (quantitySelected > a && quantitySelected != 1) {
+                                    Toast.makeText(Main6Activity.this, "Choose a lesser quantity", Toast.LENGTH_SHORT).show();
+                                } else if (quantitySelected == 1 && a == 0) {
+                                    Toast.makeText(Main6Activity.this, "Sorry,This item is not available now", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    cart += p.getPrice() * quantitySelected - ((p.getPrice() * p.getDiscount()) / 100);
+                                    sb.append(p.getName() + "\t x \t " + quantitySelected + "\t\t="+(p.getPrice()*quantitySelected)+"\n");
+                                    dataSnapshot.getRef().child("quantity").setValue(a - quantitySelected);
+                                    Toast.makeText(Main6Activity.this, "Item added", Toast.LENGTH_LONG).show();
+
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+                }); builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.create().show();
+
+                // finish();
+            }
+        });
+
+
+    }
+    public void cMain(View view){
+        list.clear();
+        mDatabase= FirebaseDatabase.getInstance().getReference().child("Main Course");
+        final ArrayAdapter<String> a1=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+
+                TextView textView=(TextView) view.findViewById(android.R.id.text1);
+
+            /*YOUR CHOICE OF COLOR*/
+                textView.setTextColor(Color.BLACK);
+
+                return view;
+            }
+        };
+
+        listView.setAdapter(a1);
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Product product=dataSnapshot.getValue(Product.class);
+
+                value="Name: "+product.getName()+"\n"+" Price: "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
+
+
+
+
+                list.add(value);
+
+                a1.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                p1 = position;
+                final NumberPicker numberPicker = new NumberPicker(Main6Activity.this);
+                numberPicker.setMaxValue(10);
+                numberPicker.setMinValue(1);
+                long val = a1.getItemId(p1);
+                String s = a1.getItem(p1);
+                String[] s1 = s.split(" ");
+                name = s1[1];
+
+
+                builder = new AlertDialog.Builder(Main6Activity.this);
+                builder.setTitle("Buy");
+                builder.setMessage("Select Quantity:");
+                builder.setView(numberPicker);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        quantitySelected=numberPicker.getValue();
+                        //     Toast.makeText(Main6Activity.this,""+quantitySelected,Toast.LENGTH_SHORT).show();
+
+                        mDatabase = FirebaseDatabase.getInstance().getReference().child("Main Course").child(name.trim());
+                        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Product p = dataSnapshot.getValue(Product.class);
+                                int a = p.getQuantity();
+                                if (quantitySelected > a && quantitySelected != 1) {
+                                    Toast.makeText(Main6Activity.this, "Choose a lesser quantity", Toast.LENGTH_SHORT).show();
+                                } else if (quantitySelected == 1 && a == 0) {
+                                    Toast.makeText(Main6Activity.this, "Sorry,This item is not available now", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    cart += p.getPrice() * quantitySelected - ((p.getPrice() * p.getDiscount()) / 100);
+                                    sb.append(p.getName() + "\t x \t " + quantitySelected + "\t\t="+(p.getPrice()*quantitySelected)+"\n");
+                                    dataSnapshot.getRef().child("quantity").setValue(a - quantitySelected);
+                                    Toast.makeText(Main6Activity.this, "Item added", Toast.LENGTH_LONG).show();
+
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+                }); builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.create().show();
+
+                // finish();
+            }
+        });
+
+
+    }
+    public void clearCart(View view){
         sb.replace(0,sb.toString().length(),"");
         cart=0;
     }
-}
+    }
+

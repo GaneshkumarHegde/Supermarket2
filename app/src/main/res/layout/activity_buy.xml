@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.android.supermarket.Buy">
+    tools:context="com.example.android.supermarket.Buy"
+    android:background="@drawable/sea"
+    >
 
     <EditText
 android:id="@+id/mail"

@@ -37,6 +37,7 @@ String type;
     public void  onSubmit(View view){
         e1=(EditText)findViewById(R.id.modifyItem);
         name=e1.getText().toString();
+        if(!(e1.getText().toString().length()==0)){
         Toast.makeText(this,"Modify the Item details now",Toast.LENGTH_SHORT).show();
         r1=(RadioButton)findViewById(R.id.r1);
         r2=(RadioButton)findViewById(R.id.r2);
@@ -46,6 +47,10 @@ String type;
         else{
             type=r2.getText().toString();
 
+        }}
+        else {
+            Toast.makeText(Modify.this,"Enter the name of the Item",Toast.LENGTH_SHORT).show();
+
         }
     }
     public void abc(android.view.View v){
@@ -53,6 +58,7 @@ String type;
         startActivity(intent);
     }
     public  void changePrice(View view){
+        try{
         if(TextUtils.isEmpty(e1.getText().toString())){
             e1.setError("Required");
 
@@ -89,9 +95,12 @@ Toast.makeText(Modify.this,"Modified Successfully",Toast.LENGTH_SHORT).show();
             });                    alertDialog.create().show();
 
 
+        }}catch(Exception e){
+            Toast.makeText(Modify.this,"Enter the name of the Item",Toast.LENGTH_SHORT).show();
         }
     }
     public  void changeDiscount(View view){
+        try{
         if(TextUtils.isEmpty(e1.getText().toString())){
             e1.setError("Required");
 
@@ -126,9 +135,13 @@ Toast.makeText(Modify.this,"Modified Successfully",Toast.LENGTH_SHORT).show();
             });                    alertDialog.create().show();
 
 
+        }}catch(Exception e){
+            Toast.makeText(Modify.this,"Enter the name of the Item",Toast.LENGTH_SHORT).show();
+
         }
     }
     public  void delete(View view){
+        try{
         if(TextUtils.isEmpty(e1.getText().toString())){
             e1.setError("Required");
 
@@ -149,7 +162,10 @@ Toast.makeText(Modify.this,"Modified Successfully",Toast.LENGTH_SHORT).show();
 
                 }
             });
-            }
+            }}catch(Exception e){
+            Toast.makeText(Modify.this,"Enter the name of the Item",Toast.LENGTH_SHORT).show();
+
+        }
 
 
         }
