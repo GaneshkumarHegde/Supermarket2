@@ -20,9 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Main2Activity" />
-        <activity android:name=".Main3Activity" />
-        <activity android:name=".displayProducts" />
-        <activity android:name=".CustomerSignIn" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -31,11 +28,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".Main5Activity"
-            android:label="Super Market"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".View" />
         <activity android:name=".Modify" />
         <activity android:name=".ViewProductMenu" />
         <activity android:name=".Main6Activity" />

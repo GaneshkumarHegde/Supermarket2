@@ -64,50 +64,8 @@ startActivity(intent);
 
 
 
-public  void customerLogin(View view){
-    EditText e1=(EditText)findViewById(R.id.cName);
-    EditText e2=(EditText)findViewById(R.id.cPassword);
-    String name=e1.getText().toString();
-    StringBuffer pswd=new StringBuffer();
-pswd.append(e2.getText().toString());
-    progressDialog.setMessage("Please Wait...");
-    progressDialog.show();
-    if(e1.getText().toString().trim().length()==0 ){
-e1.setError("Required");                        progressDialog.dismiss();
-
-    }
-    if(e2.getText().toString().trim().length()==0 ){
-        e2.setError("Required");                        progressDialog.dismiss();
-
-    }
-    if(!((e2.getText().toString().trim().length()==0)   ||(e1.getText().toString().trim().length()==0))  ){
-
-     /*   firebaseAuth.signInWithEmailAndPassword(name, pswd.toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //if the task is successfull
-                        if(task.isSuccessful()){
-                            //start the profile activity
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), Main5Activity.class));
-                        }
-                        else{
-                            Toast.makeText(MainActivity.this,"Invalid Email or Password",Toast.LENGTH_LONG).show();
-                        }
-                        progressDialog.dismiss();
-
-                }
-                });
 
 
-*/
-}}
-    public void createNewCustomer(View view){
-        Intent i=new Intent(this,CustomerSignIn.class);
-        startActivity(i);
-
-    }
 public void exit(View view){
     finishAffinity();
     /*Intent intent = new Intent(getApplicationContext(), Welcome.class);

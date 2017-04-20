@@ -60,7 +60,7 @@ RadioButton r1;
 
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-         imageview=(ImageView)findViewById(R.id.imageView);
+       //  imageview=(ImageView)findViewById(R.id.imageView);
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         switch(requestCode) {
             case 0:
