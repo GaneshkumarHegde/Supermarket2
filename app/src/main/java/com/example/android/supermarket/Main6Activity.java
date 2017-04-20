@@ -84,7 +84,7 @@ ArrayList<String> cartList=new ArrayList<>();
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product=dataSnapshot.getValue(Product.class);
 
-                value="Name: "+product.getName()+" \n"+"Price(Rs.): "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
+                value=" "+product.getName()+" \n"+" Rs."+product.getPrice()+"\n "+product.getDiscount()+"% off\n";
 
 
 
@@ -96,7 +96,17 @@ ArrayList<String> cartList=new ArrayList<>();
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                Product p = dataSnapshot.getValue(Product.class);
+                             int q = p.getQuantity();
+                              // Toast.makeText(Main6Activity.this, "" + q, Toast.LENGTH_SHORT).show();
+                if (q == 0) {
+                                      Intent in = new Intent(Main6Activity.this, createProduct.class);
+                    PendingIntent pending = PendingIntent.getActivity(Main6Activity.this, 0, in, 0);
+                                   Notification noti = new Notification.Builder(Main6Activity.this).setContentTitle("Out of Stock").setContentText(p.getName() + " is out of stock\n").setSmallIcon(R.mipmap.iii).setContentIntent(pending).build();
+                                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+                                       manager.notify(0, noti);
+                                   }
             }
 
             @Override
@@ -233,7 +243,7 @@ ArrayList<String> cartList=new ArrayList<>();
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product=dataSnapshot.getValue(Product.class);
 
-                value="Name: "+product.getName()+" \n"+"Price(Rs.): "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
+                value=" "+product.getName()+" \n"+" Rs."+product.getPrice()+"\n "+product.getDiscount()+"% off\n";
 
 
 
@@ -245,7 +255,17 @@ ArrayList<String> cartList=new ArrayList<>();
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                Product p = dataSnapshot.getValue(Product.class);
+                int q = p.getQuantity();
+                // Toast.makeText(Main6Activity.this, "" + q, Toast.LENGTH_SHORT).show();
+                if (q == 0) {
+                    Intent in = new Intent(Main6Activity.this, createProduct.class);
+                    PendingIntent pending = PendingIntent.getActivity(Main6Activity.this, 0, in, 0);
+                    Notification noti = new Notification.Builder(Main6Activity.this).setContentTitle("Out of Stock").setContentText(p.getName() + " is out of stock\n").setSmallIcon(R.mipmap.iii).setContentIntent(pending).build();
+                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    noti.flags |= Notification.FLAG_AUTO_CANCEL;
+                    manager.notify(0, noti);
+                }
             }
 
             @Override
@@ -275,9 +295,7 @@ ArrayList<String> cartList=new ArrayList<>();
                 String[] s1 = s.split(" ");
                 name = s1[1];
 
-
                 builder = new AlertDialog.Builder(Main6Activity.this);
-                //  builder.setCancelable(true);
                 builder.setTitle("Buy");
                 builder.setMessage("Select Quantity:");
                 builder.setView(numberPicker);
@@ -287,7 +305,6 @@ ArrayList<String> cartList=new ArrayList<>();
                     public void onClick(DialogInterface dialog, int which) {
 
                         quantitySelected=numberPicker.getValue();
-                        //     Toast.makeText(Main6Activity.this,""+quantitySelected,Toast.LENGTH_SHORT).show();
 
                                                mDatabase = FirebaseDatabase.getInstance().getReference().child("Starter").child(name.trim());
                         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -354,7 +371,7 @@ ArrayList<String> cartList=new ArrayList<>();
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product=dataSnapshot.getValue(Product.class);
 
-                value="Name: "+product.getName()+"\n"+" Price: "+product.getPrice()+"\nQuantity: "+product.getQuantity()+"\nProduct Number: "+product.getNumber()+"\nDiscount: "+product.getDiscount()+"\n";
+                value=" "+product.getName()+" \n"+" Rs."+product.getPrice()+"\n "+product.getDiscount()+"% off\n";
 
 
 
@@ -366,7 +383,17 @@ ArrayList<String> cartList=new ArrayList<>();
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                Product p = dataSnapshot.getValue(Product.class);
+                int q = p.getQuantity();
+                // Toast.makeText(Main6Activity.this, "" + q, Toast.LENGTH_SHORT).show();
+                if (q == 0) {
+                    Intent in = new Intent(Main6Activity.this, createProduct.class);
+                    PendingIntent pending = PendingIntent.getActivity(Main6Activity.this, 0, in, 0);
+                    Notification noti = new Notification.Builder(Main6Activity.this).setContentTitle("Out of Stock").setContentText(p.getName() + " is out of stock\n").setSmallIcon(R.mipmap.iii).setContentIntent(pending).build();
+                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    noti.flags |= Notification.FLAG_AUTO_CANCEL;
+                    manager.notify(0, noti);
+                }
             }
 
             @Override

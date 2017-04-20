@@ -140,7 +140,7 @@ public void exit(View view){
         if (!((e2.getText().toString().trim().length() == 0) || (e1.getText().toString().trim().length() == 0))) {
 
 
-         /*  firebaseAuth.signInWithEmailAndPassword(name, pswd.toString())
+           firebaseAuth.signInWithEmailAndPassword(name, pswd.toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -155,8 +155,7 @@ public void exit(View view){
                             progressDialog.dismiss();
 
                         }
-                    });*/
-            startActivity(new Intent(getApplicationContext(), Main2Activity.class));
+                    });
 
         }
     }}

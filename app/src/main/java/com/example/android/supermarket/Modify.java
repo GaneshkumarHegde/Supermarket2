@@ -146,7 +146,7 @@ Toast.makeText(Modify.this,"Modified Successfully",Toast.LENGTH_SHORT).show();
             e1.setError("Required");
 
         }else{
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("Products").child(name);
+            mDatabase = FirebaseDatabase.getInstance().getReference().child(type).child(name);
             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
